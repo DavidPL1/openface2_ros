@@ -30,6 +30,10 @@ find_path(OPENFACE_INCLUDE_DIR LandmarkDetectorModel.h PATH_SUFFIXES OpenFace)
 add_definitions(-std=c++11)
 add_definitions(-g -pg)
 
+catkin_package(
+    CATKIN_DEPENDS roscpp package cv_bridge tf2 image_transport openface2_ros_msgs    
+)
+
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
@@ -44,7 +48,7 @@ add_executable(openface2_bridge
     src/openface2_ros.cpp
 )
 
-add_dependencies(openface2_bridge ${catkin_EXPORTED_TARGETS})
+add_dependencies(openface2_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(openface2_bridge
   ${catkin_LIBRARIES}
@@ -56,7 +60,10 @@ target_link_libraries(openface2_bridge
 )
 
 install(TARGETS openface2_bridge
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 install(DIRECTORY launch

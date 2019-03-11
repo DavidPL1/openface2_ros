@@ -24,9 +24,9 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-#include "openface2_ros/ActionUnit.h"
-#include "openface2_ros/Face.h"
-#include "openface2_ros/Faces.h"
+#include "openface2_ros_msgs/ActionUnit.h"
+#include "openface2_ros_msgs/Face.h"
+#include "openface2_ros_msgs/Faces.h"
 
 #include <sensor_msgs/Image.h>
 
@@ -132,7 +132,7 @@ namespace openface2_ros
       rate_ = round(30/rate);
 
       camera_sub_ = it_.subscribeCamera(image_topic_, 1, &OpenFace2Ros::process_incoming_, this);
-      faces_pub_ = nh_.advertise<Faces>("openface2/faces", 10);
+      faces_pub_ = nh_.advertise<openface2_ros_msgs::Faces>("openface2/faces", 10);
       if(publish_viz_) viz_pub_ = it_.advertise("openface2/image", 1);
       init_openface_();
     }
@@ -316,7 +316,7 @@ namespace openface2_ros
         decltype(cv_ptr_rgb->image) viz_img = cv_ptr_rgb->image.clone();
         if(publish_viz_) visualizer.SetImage(viz_img, fx, fy, cx, cy);
 
-        Faces faces;
+        openface2_ros_msgs::Faces faces;
         faces.header.frame_id = img->header.frame_id;
         faces.header.stamp = Time::now();
 
@@ -327,7 +327,7 @@ namespace openface2_ros
 			if (active_models[model])
 			{
 				// Estimate head pose and eye gaze
-	            Face face;
+	            openface2_ros_msgs::Face face;
 
           	    // Estimate head pose and eye gaze				
 			    cv::Vec6d head_pose = LandmarkDetector::GetPose(face_models[model], fx, fy, cx, cy);
@@ -439,13 +439,13 @@ namespace openface2_ros
           		auto aus_reg = face_analyser.GetCurrentAUsReg();
           		auto aus_class = face_analyser.GetCurrentAUsClass();
         
-          		unordered_map<string, ActionUnit> aus;
+          		unordered_map<string, openface2_ros_msgs::ActionUnit> aus;
           		for(const auto &au_reg : aus_reg)
           		{
             		auto it = aus.find(get<0>(au_reg));
             		if(it == aus.end())
             		{
-              			ActionUnit u;
+              			openface2_ros_msgs::ActionUnit u;
               			u.name = get<0>(au_reg);
               			u.intensity = get<1>(au_reg);
               			aus.insert({ get<0>(au_reg), u});
@@ -459,7 +459,7 @@ namespace openface2_ros
             		auto it = aus.find(get<0>(au_class));
             		if(it == aus.end())
             		{
-              			ActionUnit u;
+                        openface2_ros_msgs::ActionUnit u;
               			u.name = get<0>(au_class);
               			u.presence = get<1>(au_class);
               			aus.insert({ get<0>(au_class), u});
