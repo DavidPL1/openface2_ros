@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(openface2_bridge)
 
 find_package(catkin REQUIRED COMPONENTS
-  message_generation
-  message_runtime
   image_transport
   cv_bridge
   std_msgs
@@ -13,6 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf2
   tf2_ros
   openface2_ros_msgs
+)
+
+catkin_package(
+    CATKIN_DEPENDS roscpp package cv_bridge tf2 image_transport openface2_ros_msgs    
 )
 
 find_package(Boost 1.5.9 REQUIRED COMPONENTS filesystem system)
@@ -29,10 +31,6 @@ find_path(OPENFACE_INCLUDE_DIR LandmarkDetectorModel.h PATH_SUFFIXES OpenFace)
 
 add_definitions(-std=c++11)
 add_definitions(-g -pg)
-
-catkin_package(
-    CATKIN_DEPENDS roscpp package cv_bridge tf2 image_transport openface2_ros_msgs    
-)
 
 include_directories(
   include

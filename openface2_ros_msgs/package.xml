@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="2">
   <name>openface2_ros_msgs</name>
   <version>1.0.0</version>
   <description>The openface2_ros messages package</description>
@@ -10,16 +10,13 @@
   <author email="dito.cahya@bristol.ac.uk">Dito Cahya</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>sensor_msgs</build_depend>
+
   <build_depend>message_generation</build_depend>
-  <run_depend>message_runtime</run_depend>
-  <run_depend>std_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>sensor_msgs</run_depend>
 
-  <export>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>sensor_msgs</depend>
 
-  </export>
+  <exec_depend>message_runtime</exec_depend>
+
 </package>

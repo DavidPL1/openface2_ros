@@ -3,27 +3,28 @@ project(openface2_ros_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
   message_generation
-  message_runtime
   std_msgs
   geometry_msgs
   sensor_msgs
 )
 
 add_message_files(
-    FILES 
-    ActionUnit.msg 
-    Face.msg 
+    FILES
+    ActionUnit.msg
+    Face.msg
     Faces.msg
 )
 
 generate_messages(
-    DEPENDENCIES 
-    std_msgs 
+    DEPENDENCIES
+    std_msgs
+    sensor_msgs
     geometry_msgs
 )
 
 catkin_package(
     CATKIN_DEPENDS
+    message_runtime
     std_msgs
     sensor_msgs
     geometry_msgs
