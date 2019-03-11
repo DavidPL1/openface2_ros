@@ -40,13 +40,13 @@ include_directories(
   ${OpenCV_INCLUDE_DIRS}
 )
 
-add_executable(openface2_ros 
+add_executable(openface2_bridge
     src/openface2_ros.cpp
 )
 
-add_dependencies(openface2_ros ${catkin_EXPORTED_TARGETS})
+add_dependencies(openface2_bridge ${catkin_EXPORTED_TARGETS})
 
-target_link_libraries(openface2_ros
+target_link_libraries(openface2_bridge
   ${catkin_LIBRARIES}
   ${OPENFACE_LIBS}
   openblas
@@ -55,7 +55,7 @@ target_link_libraries(openface2_ros
   ${OpenCV_LIBRARIES}
 )
 
-install(TARGETS openface2_ros
+install(TARGETS openface2_bridge
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
