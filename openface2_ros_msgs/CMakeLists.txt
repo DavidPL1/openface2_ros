@@ -12,7 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
     FILES 
     ActionUnit.msg 
-    Face.msg Faces.msg
+    Face.msg 
+    Faces.msg
 )
 
 generate_messages(
