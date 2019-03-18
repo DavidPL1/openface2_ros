@@ -19,6 +19,10 @@ catkin_package(
 
 find_package(Boost 1.5.9 REQUIRED COMPONENTS filesystem system)
 find_package(OpenCV 3 REQUIRED)
+find_package(dlib REQUIRED)
+
+message(" dlib_ROOT  ${dlib_ROOT}")
+message(" dlib_DIR  ${dlib_DIR}")
 
 find_library(OPENFACE_LD_LIB LandmarkDetector)
 find_library(OPENFACE_FA_LIB FaceAnalyser)
@@ -52,7 +56,7 @@ target_link_libraries(openface2_bridge
   ${catkin_LIBRARIES}
   ${OPENFACE_LIBS}
   openblas
-  dlib
+  dlib::dlib
   ${Boost_LIBRARIES}
   ${OpenCV_LIBRARIES}
 )
