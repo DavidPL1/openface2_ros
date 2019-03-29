@@ -21,8 +21,7 @@ find_package(Boost 1.5.9 REQUIRED COMPONENTS filesystem system)
 find_package(OpenCV 3 REQUIRED)
 find_package(dlib REQUIRED)
 
-message(" dlib_ROOT  ${dlib_ROOT}")
-message(" dlib_DIR  ${dlib_DIR}")
+message("dlib_DIR:  ${dlib_DIR}")
 
 find_library(OPENFACE_LD_LIB LandmarkDetector)
 find_library(OPENFACE_FA_LIB FaceAnalyser)
@@ -50,7 +49,13 @@ add_executable(openface2_bridge
     src/openface2_ros.cpp
 )
 
+add_executable(headpose
+        src/headpose.cpp
+        )
+
+
 add_dependencies(openface2_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(headpose ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(openface2_bridge
   ${catkin_LIBRARIES}
@@ -61,12 +66,29 @@ target_link_libraries(openface2_bridge
   ${OpenCV_LIBRARIES}
 )
 
+target_link_libraries(headpose
+        ${catkin_LIBRARIES}
+        ${OPENFACE_LIBS}
+        openblas
+        dlib::dlib
+        ${Boost_LIBRARIES}
+        ${OpenCV_LIBRARIES}
+        )
+
 install(TARGETS openface2_bridge
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+install(TARGETS headpose
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )
+
 
 install(DIRECTORY launch
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
