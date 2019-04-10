@@ -332,9 +332,9 @@ namespace openface2_ros
 
           	    // Estimate head pose and eye gaze				
 			    cv::Vec6d head_pose = LandmarkDetector::GetPose(face_models[model], fx, fy, cx, cy);
-	            face.head_pose.position.x = head_pose[0];
-	            face.head_pose.position.y = head_pose[1];
-	            face.head_pose.position.z = head_pose[2];
+	            face.head_pose.position.x = head_pose[0] / 1000.0;
+	            face.head_pose.position.y = head_pose[1] / 1000.0;
+	            face.head_pose.position.z = head_pose[2] / 1000.0;
 	          
 	            const auto head_orientation = toQuaternion(head_pose[4], -head_pose[3], -head_pose[5]);
 	            face.head_pose.orientation = toQuaternion(M_PI,  0,  0);//toQuaternion(M_PI / 2, 0, M_PI / 2);// toQuaternion(0, 0, 0);
@@ -346,9 +346,9 @@ namespace openface2_ros
 	            stringstream out;
 	            out << "head" << model;
 	            transform.child_frame_id = out.str();
-	            transform.transform.translation.x = face.head_pose.position.x / 1000.0;
-	            transform.transform.translation.y = face.head_pose.position.y / 1000.0;
-	            transform.transform.translation.z = face.head_pose.position.z / 1000.0;
+	            transform.transform.translation.x = face.head_pose.position.x;
+	            transform.transform.translation.y = face.head_pose.position.y;
+	            transform.transform.translation.z = face.head_pose.position.z;
 	            transform.transform.rotation = face.head_pose.orientation;
 	            tf_br_.sendTransform(transform);
           
