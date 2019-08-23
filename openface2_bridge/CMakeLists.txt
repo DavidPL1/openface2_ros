@@ -53,9 +53,13 @@ add_executable(headpose
         src/headpose.cpp
         )
 
+add_executable(headpose_single
+        src/headpose_single.cpp
+        )
 
 add_dependencies(openface2_bridge ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(headpose ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(headpose_single ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(openface2_bridge
   ${catkin_LIBRARIES}
@@ -74,6 +78,14 @@ target_link_libraries(headpose
         ${Boost_LIBRARIES}
         ${OpenCV_LIBRARIES}
         )
+target_link_libraries(headpose_single
+        ${catkin_LIBRARIES}
+        ${OPENFACE_LIBS}
+        openblas
+        dlib::dlib
+        ${Boost_LIBRARIES}
+        ${OpenCV_LIBRARIES}
+        )
 
 install(TARGETS openface2_bridge
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
@@ -83,6 +95,12 @@ install(TARGETS openface2_bridge
 )
 
 install(TARGETS headpose
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )
+install(TARGETS headpose_single
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
