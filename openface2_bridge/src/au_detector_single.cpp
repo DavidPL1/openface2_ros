@@ -224,7 +224,6 @@ namespace openface2_ros
       if(publish_viz_) visualizer.SetImage(viz_img, fx, fy, cx, cy);
 
       openface2_ros_msgs::ActionUnits aus_msg;
-      aus_msg.header.seq = img->header.seq;
       aus_msg.header.frame_id = img->header.frame_id;
       aus_msg.header.stamp = Time::now();
       if(detection_success) {
@@ -265,6 +264,7 @@ namespace openface2_ros
 
       for(const auto &au : aus) aus_msg.action_units.push_back(get<1>(au));
 
+      aus_msg.image_id = img->header.seq;
       aus_pub_.publish(aus_msg);
 
       if (publish_viz_)
